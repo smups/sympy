@@ -324,10 +324,7 @@ class RustCodePrinter(CodePrinter):
         return f"{int(expr.p)}.0/{int(expr.q)}.0"
 
     def _print_Relational(self, expr):
-        lhs_code = self._print(expr.lhs)
-        rhs_code = self._print(expr.rhs)
-        op = expr.rel_op
-        return "{} {} {}".format(lhs_code, op, rhs_code)
+        return f"{self._print(expr.lhs)} {expr.rel_op} {self._print(expr.rhs)}"
 
     def _print_Indexed(self, expr):
         # calculate index for 1d array
@@ -346,16 +343,16 @@ class RustCodePrinter(CodePrinter):
         return expr.name
 
     def _print_Exp1(self, expr, _type=False):
-        return "E"
+        return "std::f64::consts::E"
 
     def _print_Pi(self, expr, _type=False):
-        return 'PI'
+        return 'std::f64::consts::PI'
 
     def _print_Infinity(self, expr, _type=False):
-        return 'INFINITY'
+        return 'f64::INFINITY'
 
     def _print_NegativeInfinity(self, expr, _type=False):
-        return 'NEG_INFINITY'
+        return 'f64::NEG_INFINITY'
 
     def _print_BooleanTrue(self, expr, _type=False):
         return "true"
@@ -367,7 +364,7 @@ class RustCodePrinter(CodePrinter):
         return str(expr).lower()
 
     def _print_NaN(self, expr, _type=False):
-        return "NAN"
+        return "f64::NAN"
 
     def _print_Piecewise(self, expr):
         if expr.args[-1].cond != True:
