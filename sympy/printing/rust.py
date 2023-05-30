@@ -162,8 +162,23 @@ known_functions = {
 # These are the core reserved words in the Rust language. Taken from:
 # http://doc.rust-lang.org/grammar.html#keywords
 
+
+# Rust has an edition system, where each edition may add or remove keywords. To
+# avoid breaking backwards compatibility, keywords can be reserved as a "weak" or
+# "reserved" keyword before becoming a "strict" keyword. Strict keywords are used
+# in the stable version of the language and can only be used in their lexically
+# appropriate position. Reserved keywords cannot be used in (stable) code at all.
+# Weak keywords are only interpreted as keywords in their intended lexical position
+# (for example: "union" is only a keyword when declaring a union, but can otherwise
+#  be used as a variable or function name).
+# Currently, Rust has three editions:
+#   - Edition 2015 (Rust '15) coinciding with version 1.0
+#   - Edition 2018 (Rust '18) coinciding with version 1.31
+#   - Edition 2021 (Rust '21) coinciding with version 1.56
+#   - (future Rust '24?)
+# Rust '21 did not add any new keywords. 
 reserved_words = [
-    #Strict keywords in Rust '15
+    #Strict keywords in Rust '15 (1.0.0)
     "as", "break", "const", "continue", "crate", "else", "enum", "extern", "false",
     "fn", "for", "if", "impl", "in", "let", "loop", "match", "mod", "move", "mut",
     "pub", "ref", "return", "self", "Self", "static", "struct", "super", "trait",
