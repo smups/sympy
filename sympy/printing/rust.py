@@ -321,8 +321,7 @@ class RustCodePrinter(CodePrinter):
             return ret
 
     def _print_Rational(self, expr):
-        p, q = int(expr.p), int(expr.q)
-        return '%d_f64/%d.0' % (p, q)
+        return f"{int(expr.p)}.0/{int(expr.q)}.0"
 
     def _print_Relational(self, expr):
         lhs_code = self._print(expr.lhs)
