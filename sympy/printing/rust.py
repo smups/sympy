@@ -224,13 +224,14 @@ class RustCodePrinter(CodePrinter):
         return p*5
 
     def _get_statement(self, codestring):
-        return "%s;" % codestring
+        return f"{codestring};"
 
     def _get_comment(self, text):
-        return "// %s" % text
+        return f"// {text}"
 
     def _declare_number_const(self, name, value):
-        return "const %s: f64 = %s;" % (name, value)
+        #TODO: not all constants should be f64
+        return f"const {name.upper()}: f64 = {value};"
 
     def _format_code(self, lines):
         return self.indent_code(lines)
