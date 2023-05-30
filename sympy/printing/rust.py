@@ -250,7 +250,7 @@ class RustCodePrinter(CodePrinter):
             # for something like `sin(x + y + z)`,
             # make sure we can get '(x + y + z).sin()'
             # instead of 'x + y + z.sin()'
-            return '(' + self._print(expr) + ')'
+            return f"({self._print(expr)})"
         elif expr.is_number:
             return self._print(expr, _type=True)
         else:
@@ -280,27 +280,15 @@ class RustCodePrinter(CodePrinter):
                         break
             if func is not None:
                 if style == 1:
-                    ret = "%(var)s.%(method)s(%(args)s)" % {
-                        'var': self._print_caller_var(expr.args[0]),
-                        'method': func,
-                        'args': self.stringify(expr.args[1:], ", ") if len(expr.args) > 1 else ''
-                    }
+                    instance = self._print_caller_var(expr.args[0])
+                    arguments = self.stringify(expr.args[1:], ", ") if len(expr.args) > 1 else ''
+                    return f"{instance}.{func}({arguments})"
                 elif style == 2:
-                    ret = "%(var)s.%(method)s()" % {
-                        'var': self._print_caller_var(expr.args[0]),
-                        'method': func,
-                    }
+                    return f"{self._print_caller_var(expr.args[0])}.{func}()"
                 elif style == 3:
-                    ret = "%(var)s.%(method)s()" % {
-                        'var': self._print_caller_var(expr.args[1]),
-                        'method': func,
-                    }
+                    return f"{self._print_caller_var(expr.args[1])}.{func}()"
                 else:
-                    ret = "%(func)s(%(args)s)" % {
-                        'func': func,
-                        'args': self.stringify(expr.args, ", "),
-                    }
-                return ret
+                    return f"{func}({self.stringify(expr.args, ', ')})"
         elif hasattr(expr, '_imp_') and isinstance(expr._imp_, Lambda):
             # inlined function
             return self._print(expr._imp_(*expr.args))
