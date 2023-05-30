@@ -241,16 +241,8 @@ class RustCodePrinter(CodePrinter):
         return ((i, j) for i in range(rows) for j in range(cols))
 
     def _get_loop_opening_ending(self, indices):
-        open_lines = []
-        close_lines = []
-        loopstart = "for %(var)s in %(start)s..%(end)s {"
-        for i in indices:
-            # Rust arrays start at 0 and end at dimension-1
-            open_lines.append(loopstart % {
-                'var': self._print(i),
-                'start': self._print(i.lower),
-                'end': self._print(i.upper + 1)})
-            close_lines.append("}")
+        open_lines = [f"for {self._print(i)} in {self._print(i.lower)}..={self._print(i.upper)} {{" for i in indices]
+        close_lines = ["}" for _ in indices]
         return open_lines, close_lines
 
     def _print_caller_var(self, expr):
