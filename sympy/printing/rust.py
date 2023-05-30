@@ -162,59 +162,22 @@ known_functions = {
 # These are the core reserved words in the Rust language. Taken from:
 # http://doc.rust-lang.org/grammar.html#keywords
 
-reserved_words = ['abstract',
-                  'alignof',
-                  'as',
-                  'become',
-                  'box',
-                  'break',
-                  'const',
-                  'continue',
-                  'crate',
-                  'do',
-                  'else',
-                  'enum',
-                  'extern',
-                  'false',
-                  'final',
-                  'fn',
-                  'for',
-                  'if',
-                  'impl',
-                  'in',
-                  'let',
-                  'loop',
-                  'macro',
-                  'match',
-                  'mod',
-                  'move',
-                  'mut',
-                  'offsetof',
-                  'override',
-                  'priv',
-                  'proc',
-                  'pub',
-                  'pure',
-                  'ref',
-                  'return',
-                  'Self',
-                  'self',
-                  'sizeof',
-                  'static',
-                  'struct',
-                  'super',
-                  'trait',
-                  'true',
-                  'type',
-                  'typeof',
-                  'unsafe',
-                  'unsized',
-                  'use',
-                  'virtual',
-                  'where',
-                  'while',
-                  'yield']
-
+reserved_words = [
+    #Strict keywords in Rust '15
+    "as", "break", "const", "continue", "crate", "else", "enum", "extern", "false",
+    "fn", "for", "if", "impl", "in", "let", "loop", "match", "mod", "move", "mut",
+    "pub", "ref", "return", "self", "Self", "static", "struct", "super", "trait",
+    "true", "type", "unsafe", "use", "where", "while",
+    #Additional strict keywords in Rust '18
+    "async", "await", "dyn",
+    #Reserved keywords in Rust '15
+    "abstract", "become", "box", "do", "final", "macro", "override", "priv", "typeof",
+    "unsized", "virtual", "yield",
+    #Additional reserved keywords in Rust '18
+    "try",
+    #Weak keywords in Rust '18
+    "union", "macro_rules", "'static"
+]
 
 class RustCodePrinter(CodePrinter):
     """A printer to convert SymPy expressions to strings of Rust code"""
